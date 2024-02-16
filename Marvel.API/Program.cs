@@ -1,6 +1,15 @@
+using Marvel.API.Services;
+using Refit;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.AddRefitClient<IMarvelApiService>().ConfigureHttpClient(c =>
+{
+    var urlApi = builder.Configuration["MarvelApiSettings:ApiUrl"];
+    c.BaseAddress = new Uri(urlApi!);
+});
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
