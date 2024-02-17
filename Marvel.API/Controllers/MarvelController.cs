@@ -26,7 +26,8 @@ namespace Marvel.API.Controllers
             return Ok(result);
         }
 
-        [ProducesResponseType<ResponseAPIViewModel<Character>>(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpPost]
         public async Task<ActionResult> AddFavoriteCharacter([FromBody] AddFavoriteCharacterCommand command)
         {
@@ -37,16 +38,25 @@ namespace Marvel.API.Controllers
             }
             return BadRequest(new {
                 Success = false,
-                Message = "Already exists 5 favorites characters"
+                Message = "Already exists 5 favorites characters."
             });
         }
 
-        [ProducesResponseType<ResponseAPIViewModel<Character>>(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpDelete]
         public async Task<ActionResult> RemoveFavoriteCharacter([FromBody] RemoveFavoriteCharacterCommand command)
         {
-            await _mediator.Send(command);
-            return NoContent();
+            var result = await _mediator.Send(command);
+            if (result == 1)
+            {
+                return NoContent();
+            }
+            return BadRequest(new
+            {
+                Success = false,
+                Message = "Rrror when disfavoring character."
+            });
         }
 
     }
