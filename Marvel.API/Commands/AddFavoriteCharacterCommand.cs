@@ -1,4 +1,4 @@
-﻿using Marvel.API.Models;
+﻿using Marvel.API.Entities;
 using MediatR;
 
 namespace Marvel.API.Commands

@@ -1,4 +1,4 @@
-﻿namespace Marvel.API.Models
+﻿namespace Marvel.API.Entities
 {
     public class FavoriteCharacter
     {

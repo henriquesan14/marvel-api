@@ -1,4 +1,4 @@
-﻿using Marvel.API.Models;
+﻿using Marvel.API.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Marvel.API.Infra
