@@ -7,7 +7,6 @@
         public string Description { get; set; }
         public string Modified { get; set; }
         public string ResourceURI { get; set; }
-        public string DescriptionURI { get; set; }
         
         public Thumbnail Thumbnail { get; set; }
         public bool IsFavorite { get; set; } = false;

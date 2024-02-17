@@ -8,11 +8,11 @@ namespace Marvel.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MarvelController : ControllerBase
+    public class CharacterMarvelController : ControllerBase
     {
         private readonly IMediator _mediator;
 
-        public MarvelController(IMediator mediator)
+        public CharacterMarvelController(IMediator mediator)
         {
             _mediator = mediator;
         }
