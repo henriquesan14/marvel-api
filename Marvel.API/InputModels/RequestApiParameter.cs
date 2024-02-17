@@ -11,7 +11,7 @@ namespace Marvel.API.InputModels
         [AliasAs("hash")]
         public string Hash { get; set; }
         [AliasAs("limit")]
-        public int Limit { get; set; } = 20;
+        public int Limit { get; set; }
         [AliasAs("offset")]
         public int Offset { get; set; }
         [AliasAs("name")]

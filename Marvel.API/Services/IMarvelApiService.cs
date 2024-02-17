@@ -8,5 +8,7 @@ namespace Marvel.API.Services
     {
         [Get("/v1/public/characters")]
         Task<ResponseAPIViewModel<Character>> GetCharacters(RequestApiParameter parameters);
+        [Get("/v1/public/characters")]
+        Task<ResponseAPIViewModel<Character>> GetCharacterById(int id);
     }
 }

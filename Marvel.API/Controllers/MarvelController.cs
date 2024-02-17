@@ -1,6 +1,7 @@
-﻿using Marvel.API.InputModels;
-using Marvel.API.Services;
-using Marvel.API.Utils;
+﻿using Marvel.API.Commands;
+using Marvel.API.Queries;
+using Marvel.API.ViewModels;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Marvel.API.Controllers
@@ -9,30 +10,44 @@ namespace Marvel.API.Controllers
     [ApiController]
     public class MarvelController : ControllerBase
     {
-        private readonly IMarvelApiService _service;
+        private readonly IMediator _mediator;
 
-        public MarvelController(IMarvelApiService service)
+        public MarvelController(IMediator mediator)
         {
-            _service = service;
+            _mediator = mediator;
         }
 
+        [ProducesResponseType<ResponseAPIViewModel<Character>>(StatusCodes.Status200OK)]
         [HttpGet]
-        public async Task<ActionResult> Get(string? name)
+        public async Task<ActionResult> GetCharacters([FromQuery] GetCharactersQuery query)
         {
-            var ts = 1708119314;
-            var publicKey = "244dc76eb3ac590620abe18434f15dd0";
-            var privateKey = "d311d52d5152d2f3729df9f5dc1bb6894963f5a6";
-            var parameters = ts +privateKey+publicKey;
-            var hash = parameters.ToMD5Hash();
-            var parametersApi = new RequestApiParameter {
-               ApiKey = publicKey,
-               Hash = hash,
-               Ts = ts,
-               Name = name
-            };
-            var result = await _service.GetCharacters(parametersApi);
+            var result = await _mediator.Send(query);
 
             return Ok(result);
         }
+
+        [ProducesResponseType<ResponseAPIViewModel<Character>>(StatusCodes.Status201Created)]
+        [HttpPost]
+        public async Task<ActionResult> AddFavoriteCharacter([FromBody] AddFavoriteCharacterCommand command)
+        {
+            var result = await _mediator.Send(command);
+            if (result == 1)
+            {
+                return Created();
+            }
+            return BadRequest(new {
+                Success = false,
+                Message = "Already exists 5 favorites characters"
+            });
+        }
+
+        [ProducesResponseType<ResponseAPIViewModel<Character>>(StatusCodes.Status204NoContent)]
+        [HttpDelete]
+        public async Task<ActionResult> RemoveFavoriteCharacter([FromBody] RemoveFavoriteCharacterCommand command)
+        {
+            await _mediator.Send(command);
+            return NoContent();
+        }
+
     }
 }

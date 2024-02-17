@@ -10,6 +10,7 @@
         public string DescriptionURI { get; set; }
         
         public Thumbnail Thumbnail { get; set; }
+        public bool IsFavorite { get; set; } = false;
         public string ImageUrl {
             get
             {
