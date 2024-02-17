@@ -1,4 +1,5 @@
-﻿using Marvel.API.Infra.Repositories;
+﻿using Marvel.API.Exceptions;
+using Marvel.API.Infra.Repositories;
 using MediatR;
 
 namespace Marvel.API.Commands
@@ -15,7 +16,12 @@ namespace Marvel.API.Commands
         public async Task<int> Handle(RemoveFavoriteCharacterCommand request, CancellationToken cancellationToken)
         {
             var result = await _repository.RemoveFromFavorites(request.Id);
-            return result;
+            if(result == 1)
+            {
+                return result;
+            }
+            throw new NotFoundException($"Favorite Character with id {request.Id} not exists.");
+            
         }
     }
 }

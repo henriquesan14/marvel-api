@@ -22,7 +22,6 @@ namespace Marvel.API.Controllers
         public async Task<ActionResult> GetCharacters([FromQuery] GetCharactersQuery query)
         {
             var result = await _mediator.Send(query);
-
             return Ok(result);
         }
 
@@ -31,15 +30,8 @@ namespace Marvel.API.Controllers
         [HttpPost]
         public async Task<ActionResult> AddFavoriteCharacter([FromBody] AddFavoriteCharacterCommand command)
         {
-            var result = await _mediator.Send(command);
-            if (result == 1)
-            {
-                return Created();
-            }
-            return BadRequest(new {
-                Success = false,
-                Message = "Already exists 5 favorites characters."
-            });
+            await _mediator.Send(command);
+            return Created();
         }
 
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -47,16 +39,8 @@ namespace Marvel.API.Controllers
         [HttpDelete]
         public async Task<ActionResult> RemoveFavoriteCharacter([FromBody] RemoveFavoriteCharacterCommand command)
         {
-            var result = await _mediator.Send(command);
-            if (result == 1)
-            {
-                return NoContent();
-            }
-            return BadRequest(new
-            {
-                Success = false,
-                Message = "Rrror when disfavoring character."
-            });
+            await _mediator.Send(command);
+            return NoContent();
         }
 
     }

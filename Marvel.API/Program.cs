@@ -1,3 +1,4 @@
+using Marvel.API.Filters;
 using Marvel.API.Infra;
 using Marvel.API.Infra.Repositories;
 using Marvel.API.Services;
@@ -17,6 +18,11 @@ builder.Services.AddRefitClient<IMarvelApiService>().ConfigureHttpClient(c =>
 {
     var urlApi = builder.Configuration["MarvelApiSettings:ApiUrl"];
     c.BaseAddress = new Uri(urlApi!);
+});
+
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add(typeof(CustomExceptionFilter));
 });
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()));
