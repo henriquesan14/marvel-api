@@ -33,6 +33,7 @@ namespace Marvel.API.Queries
             resultApi.Data.Results = resultApi.Data.Results
                 .OrderByDescending(character => character.IsFavorite)
                         .ThenBy(character => character.Name)
+                            .DistinctBy(c => c.Id)
                             .Take(request.Limit).ToList();
 
 

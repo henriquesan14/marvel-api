@@ -38,15 +38,7 @@ namespace Marvel.API.Infra.Repositories
 
         public async Task<IEnumerable<Character>> GetFavoriteCharacters()
         {
-            IEnumerable<Character> result = null;
-            try
-            {
-                result = await _context.FavoriteCharacters.AsNoTracking().Include(f => f.Thumbnail).ToListAsync();
-            }catch(Exception e)
-            {
-                Console.WriteLine(e);
-            }
-            return result;
+            return await _context.FavoriteCharacters.AsNoTracking().Include(f => f.Thumbnail).ToListAsync();
         }
     }
 }
