@@ -1,4 +1,5 @@
 ﻿using Marvel.API.Commands;
+using Marvel.API.Entities;
 using Marvel.API.Queries;
 using Marvel.API.ViewModels;
 using MediatR;
@@ -30,8 +31,8 @@ namespace Marvel.API.Controllers
         [HttpPost]
         public async Task<ActionResult> AddFavoriteCharacter([FromBody] AddFavoriteCharacterCommand command)
         {
-            await _mediator.Send(command);
-            return Created();
+            var result = await _mediator.Send(command);
+            return Created(new Uri(result.ResourceURI), result);
         }
 
         [ProducesResponseType(StatusCodes.Status204NoContent)]

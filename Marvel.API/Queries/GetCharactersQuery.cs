@@ -1,4 +1,5 @@
-﻿using Marvel.API.ViewModels;
+﻿using Marvel.API.Entities;
+using Marvel.API.ViewModels;
 using MediatR;
 
 namespace Marvel.API.Queries

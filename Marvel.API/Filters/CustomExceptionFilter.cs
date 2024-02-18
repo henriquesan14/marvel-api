@@ -20,7 +20,11 @@ namespace Marvel.API.Filters
             {
                 statusCode = (int)HttpStatusCode.Conflict;
             }
-            
+            else if (exception is AlreadyFavoriteCharacterException)
+            {
+                statusCode = (int)HttpStatusCode.Conflict;
+            }
+
 
             var result = new ObjectResult(new
             {

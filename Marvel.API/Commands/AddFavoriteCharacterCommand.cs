@@ -3,8 +3,8 @@ using MediatR;
 
 namespace Marvel.API.Commands
 {
-    public class AddFavoriteCharacterCommand : IRequest<int>
+    public class AddFavoriteCharacterCommand : IRequest<Character>
     {
-        public FavoriteCharacter FavoriteCharacter { get; set; }
+        public int Id { get; set; }
     }
 }
