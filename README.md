@@ -16,7 +16,7 @@ As seguintes ferramentas foram usadas na construção do projeto:
 As seguintes padrões foram usados na construção do projeto:
 - CQRS (Command Query Responsibility Segregation)
 - Repository
-- Injeção de depedência
+- Injeção de dependência
 
 ### Pré-requisitos
 
@@ -43,7 +43,7 @@ $ cd MARVEL.API/Marvel.API
 # Execute a aplicação com o comando do dotnet
 $ dotnet run
 
-# A API iniciará na porta:5000 com HTTP e na porta:5001 com HTTPS - acesse <http://localhost:5001>
+# A API iniciará na porta:5174 com HTTP>
 ```
 
 ### Autor
