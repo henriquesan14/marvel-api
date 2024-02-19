@@ -298,7 +298,7 @@ namespace Marvel.Tests.Commands
         }
 
         [Fact]
-        public async Task AddFavoriteCharacter_WhenCharacterNotExistInApi_ThrowAlreadyFavoriteCharacterException()
+        public async Task AddFavoriteCharacter_WhenFavoriteCharacterAlready_ThrowAlreadyFavoriteCharacterException()
         {
             var responseApiViewModel = new ResponseAPIViewModel<Character>
             {
@@ -415,7 +415,23 @@ namespace Marvel.Tests.Commands
                 }
             };
 
+            var character = new Character
+            {
+                Id = 555,
+                Name = "Y",
+                Description = "Test",
+                IsFavorite = true,
+                ResourceURI = "Test",
+                Modified = "Test",
+                Thumbnail = new Thumbnail
+                {
+                    Extension = "jpg",
+                    Path = "Test",
+                }
+            };
+
             _mockMarvelRepository.Setup(mr => mr.GetFavoriteCharacters()).ReturnsAsync(list);
+            _mockMarvelRepository.Setup(mr => mr.GetFavoriteCharacterById(It.IsAny<long>())).ReturnsAsync(character);
             _mockApiService.Setup(ms => ms.GetCharactersById(It.IsAny<RequestApiParameter>(), It.IsAny<int>())).ReturnsAsync(responseApiViewModel);
 
             var command = new AddFavoriteCharacterCommand { Id = 1 };

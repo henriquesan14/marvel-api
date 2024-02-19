@@ -14,31 +14,27 @@ namespace Marvel.API.Infra.Repositories
 
         public async Task<Character> AddFavoriteCharacter(Character favoriteCharacter)
         {
-            var character = await _context.FavoriteCharacters.FirstOrDefaultAsync(c => c.Id == favoriteCharacter.Id);
-            if (character == null)
-            {
-                await _context.FavoriteCharacters.AddAsync(favoriteCharacter);
-                await _context.SaveChangesAsync();
-                return favoriteCharacter;
-            }
-            return null!;
+            await _context.FavoriteCharacters.AddAsync(favoriteCharacter);
+            await _context.SaveChangesAsync();
+            return favoriteCharacter;
+            
         }
 
-        public async Task<int> RemoveFromFavorites(int characterId)
+        public async Task<int> RemoveFromFavorites(Character character)
         {
-            int result = 0;
-            var character = await _context.FavoriteCharacters.FirstOrDefaultAsync(c => c.Id == characterId);
-            if (character != null)
-            {
-                _context.Remove(character);
-                result = await _context.SaveChangesAsync();
-            }
-            return result;
+            _context.Remove(character);
+            return await _context.SaveChangesAsync();
+            
         }
 
         public async Task<IEnumerable<Character>> GetFavoriteCharacters()
         {
             return await _context.FavoriteCharacters.AsNoTracking().Include(f => f.Thumbnail).ToListAsync();
+        }
+
+        public async Task<Character> GetFavoriteCharacterById(long id)
+        {
+            return await _context.FavoriteCharacters.FirstOrDefaultAsync(c => c.Id == id);
         }
     }
 }

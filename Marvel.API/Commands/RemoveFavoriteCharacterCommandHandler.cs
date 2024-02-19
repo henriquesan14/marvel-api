@@ -15,13 +15,14 @@ namespace Marvel.API.Commands
 
         public async Task<int> Handle(RemoveFavoriteCharacterCommand request, CancellationToken cancellationToken)
         {
-            var result = await _repository.RemoveFromFavorites(request.Id);
-            if(result == 1)
+            var character = await _repository.GetFavoriteCharacterById(request.Id);
+            if(character == null)
             {
-                return result;
+                throw new NotFoundException($"Favorite Character with id {request.Id} not exist.");
             }
-            throw new NotFoundException($"Favorite Character with id {request.Id} not exists.");
-            
+
+            var result = await _repository.RemoveFromFavorites(character);
+            return result; 
         }
     }
 }

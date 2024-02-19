@@ -35,11 +35,13 @@ namespace Marvel.API.Commands
             var favoriteCharacterViewModel = resultApi.Data.Results[0];
             favoriteCharacterViewModel.IsFavorite = true;
 
-            var result =  await _repository.AddFavoriteCharacter(favoriteCharacterViewModel);
-            if(result == null)
+            var favoriteCharacterExist = await _repository.GetFavoriteCharacterById(request.Id);
+            if (favoriteCharacterExist != null)
             {
                 throw new AlreadyFavoriteCharacterException($"Already favorite character with {request.Id}.");
             }
+            var result =  await _repository.AddFavoriteCharacter(favoriteCharacterViewModel);
+            
             return result;        
         }
     }
