@@ -22,7 +22,9 @@ namespace Marvel.API.Infra
             modelBuilder.Entity<Character>()
             .HasOne(fc => fc.Thumbnail)
             .WithOne(t => t.Character)
-            .HasForeignKey<Thumbnail>(t => t.Id);
+            .HasForeignKey<Thumbnail>(t => t.Id)
+            .OnDelete(DeleteBehavior.Cascade);
+
 
             base.OnModelCreating(modelBuilder);
         }

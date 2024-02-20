@@ -14,10 +14,16 @@ namespace Marvel.API.Infra.Repositories
 
         public async Task<Character> AddFavoriteCharacter(Character favoriteCharacter)
         {
-            await _context.FavoriteCharacters.AddAsync(favoriteCharacter);
-            await _context.SaveChangesAsync();
-            return favoriteCharacter;
+            try
+            {
+                await _context.FavoriteCharacters.AddAsync(favoriteCharacter);
+                await _context.SaveChangesAsync();
+            }catch(Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
             
+            return favoriteCharacter;
         }
 
         public async Task<int> RemoveFromFavorites(Character character)
@@ -34,7 +40,7 @@ namespace Marvel.API.Infra.Repositories
 
         public async Task<Character> GetFavoriteCharacterById(long id)
         {
-            return await _context.FavoriteCharacters.FirstOrDefaultAsync(c => c.Id == id);
+            return await _context.FavoriteCharacters.Include(f => f.Thumbnail).FirstOrDefaultAsync(c => c.Id == id);
         }
     }
 }
